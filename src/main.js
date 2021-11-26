@@ -5,6 +5,4 @@ import router from './routes/index'
 import 'virtual:windi.css'
 import.meta.env.VITE_API_URL
 const app = createApp(App)
-app.use(store)
-  .use(router)
-  .mount('#app')
+app.use(store).use(router).mount('#app')

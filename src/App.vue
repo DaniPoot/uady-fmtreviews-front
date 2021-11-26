@@ -2,13 +2,13 @@
 import { defineAsyncComponent } from 'vue'
 export default {
   components: {
-    Main:  defineAsyncComponent(() => import('@/layouts/main.vue'))
+    Main: defineAsyncComponent(() => import('@/layouts/main.vue'))
   }
 }
 </script>
 
 <template>
-  <Main/>
+  <Main />
 </template>
 
 <style>
