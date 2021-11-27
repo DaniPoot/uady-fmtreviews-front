@@ -12,6 +12,12 @@ const routes = [
       import('@/layouts/listTeacher.vue')
   },
   {
+    path: '/teachers/:id',
+    name: 'teacherDetail',
+    component: () =>
+      import('@/layouts/teacherDetail.vue')
+  },
+  {
     path: '/subjects',
     name: 'subjects',
     component: () =>
