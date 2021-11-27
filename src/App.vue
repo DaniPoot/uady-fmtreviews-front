@@ -2,13 +2,16 @@
 import { defineAsyncComponent } from 'vue'
 export default {
   components: {
-    Main: defineAsyncComponent(() => import('@/layouts/main.vue'))
+    HeaderCmp: defineAsyncComponent(() => import('@/components/HeaderCmp.vue'))
   }
 }
 </script>
 
 <template>
-  <Main />
+  <main class="bg-gray-100 min-h-screen">
+    <HeaderCmp></HeaderCmp>
+    <router-view/>
+  </main>
 </template>
 
 <style>
@@ -17,7 +20,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #444444;
 }
 </style>
