@@ -1,9 +1,12 @@
 import { createStore } from 'vuex'
+import general from './general'
 import * as ProfessorsApi from '@/services/ProfessorsApi'
 import * as CoursesApi from '@/services/CoursesApi'
 
 const store = createStore({
-  modules: {}
+  modules: {
+    general
+  }
 })
 
 store['$professorsApi'] = ProfessorsApi
