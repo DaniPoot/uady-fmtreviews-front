@@ -1,0 +1,2 @@
+export const setProfessorCharacteristics = (state, characteristics) => state.professorCharacteristics = characteristics
+export const setStudentSatisfactionParameters = (state, satisfactionParameters ) => state.studentSatisfactionParameters = satisfactionParameters
