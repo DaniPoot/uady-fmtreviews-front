@@ -1,0 +1,1 @@
+export const setResourceTypes = (state, resourseTypes) => state.resourseTypes = resourseTypes
