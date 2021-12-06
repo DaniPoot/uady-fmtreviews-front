@@ -2,12 +2,13 @@
 import VueApexCharts from 'vue3-apexcharts'
 import { mapActions } from 'vuex'
 import BaseImage from '@/assets/user.png'
+import ProfesorReview from '../pages/review/review.vue'
 
 export default {
 
     name: 'TeacherDetail',
 
-    components: { apexchart: VueApexCharts },
+    components: { apexchart: VueApexCharts, ProfesorReview },
 
     data (){
         return{
@@ -37,7 +38,8 @@ export default {
                         shadeIntensity: 0.6
                     }
                 }
-            }
+            },
+            openModal: false
         }
     },
 
@@ -74,6 +76,12 @@ export default {
 
             this.chartOptions.labels = [...labels]
             this.series = [...values]
+        },
+        addReview (review) {
+          console.log(review)
+          this.openModal = false
+          if(!review) return
+          this.reviews.push(review)
         }
     }
 }
@@ -112,7 +120,8 @@ export default {
             </div>
         </div>
     </section>
-    <button class="p-3 rounded-full w-15 h-15 text-2xl fixed text-white bg-green-400 bottom-10 right-25"><font-awesome-icon icon="plus" /></button>
+    <button class="p-3 rounded-full w-15 h-15 text-2xl fixed text-white bg-green-400 bottom-10 right-25" @click="openModal = true"><font-awesome-icon icon="plus" /></button>
+    <ProfesorReview @cancell="addReview" v-if="openModal" :professor="teacher"></ProfesorReview>
 </template>
 
 <style scoped>
