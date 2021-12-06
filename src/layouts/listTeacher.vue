@@ -6,17 +6,14 @@ export default {
     TeacherCard: defineAsyncComponent(() => import('@/components/TeacherCard.vue'))
   },
   name: 'ListTeacher',
-
   data (){
     return {
       teachers: {}
     }
   },
-
   created (){
     this.getTeachers()
   },
-
   methods: {
     getTeachers (){
       //TODO: call getTeachers service
@@ -26,7 +23,6 @@ export default {
       ]
     }
   }
-
 }
 </script>
 
