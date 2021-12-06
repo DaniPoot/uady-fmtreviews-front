@@ -37,12 +37,12 @@ export const getProfessorImageById = async function ({ commit }, id) {
   }
 }
 
-export const getProfessorsCharacteristics = function ({ commit }) {
+export const getProfessorsCharacteristics = async function ({ commit }) {
  try {
     commit('general/setIsLoading', true, { root: true })
-    const characteristics = this.$professorsApi.getProfessorsCharacteristics()
+    const characteristics = await this.$professorsApi.getProfessorsCharacteristics()
     commit('general/setIsLoading', false, { root: true })
-    commit('setProfessorCharacteristics', characteristics)
+    commit('setProfessorCharacteristics', characteristics.data)
   } catch (error) {
     commit('general/setErrorMsg', error, { root: true })
   } finally {
