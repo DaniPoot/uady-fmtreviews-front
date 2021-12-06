@@ -1,5 +1,7 @@
 <script>
 import VueApexCharts from 'vue3-apexcharts'
+import { mapActions } from 'vuex'
+import BaseImage from '@/assets/user.png'
 
 export default {
 
@@ -9,6 +11,7 @@ export default {
 
     data (){
         return{
+            BaseImage,
             emojis: ['angry', 'sad', 'meh', 'happy', 'rad'],
             teacher: {},
             reviews: [],
@@ -42,47 +45,22 @@ export default {
         const id = this.$route.params.id
         this.getTeacher(id)
     },
-
+    computed: {
+      id () {
+        return this.$route.params.id
+      },
+      url () {
+        return new URL(`../assets/profile/${this.id}.png`, import.meta.url)
+      }
+    },
     methods: {
-        getTeacher (id){
-            //TODO: call getTeacher service
-            //TODO: call getAllReviews by teacher
-            this.teacher = { id, firstNames: 'Juan', lastNames: 'García', studentSatisfactionScore: 3.88, img: 'src/assets/user.png',
-                studentSatisfactionScores: [
-                    { id: 22, points: 3.0, studentSatisfactionParameter: { id: 1, name: 'Experiencia demostrada en los temas' } },
-                    { id: 23, points: 3.666, studentSatisfactionParameter: { id: 2, name: 'Claridad en las explicaciones de clase' } },
-                    { id: 24, points: 5.0, studentSatisfactionParameter: { id: 3, name: 'Voluntad de ayudar' } }
-                ]
-            }
+        ...mapActions('professors', ['getProfessorById', 'getProfessorReviews']),
+        async getTeacher (id){
+            let { data } = await this.getProfessorById(id)
+            this.teacher = data
             this.setChartValues()
-            this.reviews = [
-                { id: 1, description: 'Ut tempus sem et eros interdum, eu lobortis arcu fringilla. Nullam facilisis odio at risus aliquam, nec ultricies nisi consequat. Sed placerat, metus in imperdiet vehicula, sem turpis dictum massa, consectetur lobortis nunc leo mollis risus. Sed aliquam pellentesque magna in volutpat.',
-                    studentSatisfactionGrade: 4.0,
-                    studentSatisfactionGrades: [
-                        { id: 13, points: 3.0, studentSatisfactionParameter: { id: 1, name: 'Experiencia demostrada en los temas' } },
-                        { id: 14, points: 4.0, studentSatisfactionParameter: { id: 2, name: 'Claridad en las explicaciones de clase' } },
-                        { id: 15, points: 5.0, studentSatisfactionParameter: { id: 3, name: 'Voluntad de ayudar' } }
-                    ],
-                    professorCharacteristics: [
-                    { id: 1, description: 'Muestra interés por la materia' },
-                    { id: 2, description: 'Requiere inglés para algunas tareas' },
-                    { id: 5, description: 'Proporciona recursos útiles para el curso' }
-                    ]
-                },
-                    { id: 2, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur gravida vitae ipsum sit amet ornare. Nunc sit amet massa quam. Donec iaculis convallis vehicula. Donec ac consectetur sapien. Integer volutpat ex ex, ac rhoncus massa sodales viverra. Integer placerat dictum velit luctus pellentesque. Curabitur suscipit mollis arcu sit amet ultricies. Vestibulum scelerisque ornare eros, id tempor sapien cursus in. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                    studentSatisfactionGrade: 3.333,
-                    studentSatisfactionGrades: [
-                        { id: 19, points: 2.0, studentSatisfactionParameter: { id: 1, name: 'Experiencia demostrada en los temas' } },
-                        { id: 20, points: 3.0, studentSatisfactionParameter: { id: 2, name: 'Claridad en las explicaciones de clase' } },
-                        { id: 21, points: 5.0, studentSatisfactionParameter: { id: 3, name: 'Voluntad de ayudar' } }
-                    ],
-                    professorCharacteristics: [
-                    { id: 2, description: 'Requiere inglés para algunas tareas' },
-                    { id: 3, description: 'Calcula de forma transparente las calificaciones' },
-                    { id: 4, description: 'No se salta las clases' }
-                    ]
-                }
-            ]
+            let { data: reviews } = await this.getProfessorReviews(id)
+            this.reviews = reviews
         },
 
         setChartValues (){
@@ -105,7 +83,8 @@ export default {
 <template>
     <section class="flex flex-wrap justify-center mx-1 my-10">
         <div class="flex mx-3 px-5 flex-col items-center justify-center w-1/5 bg-white shadow-xl rounded-lg">
-            <img class=" w-30 h-30 rounded-full" :src="teacher.img" alt="teacher name">
+            <img v-if="url" class=" w-30 h-30 rounded-full" :src="url" alt="teacher name">
+            <img v-else class=" w-30 h-30 rounded-full" :src="BaseImage" alt="teacher name">
             <h2 class="my-5 text-2xl">{{ teacher.firstNames }} {{ teacher.lastNames }}</h2>
             <!--font-awesome-icon icon="phone" /-->
 

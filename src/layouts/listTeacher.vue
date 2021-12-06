@@ -1,5 +1,6 @@
 <script>
 import { defineAsyncComponent } from 'vue'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -15,12 +16,11 @@ export default {
     this.getTeachers()
   },
   methods: {
-    getTeachers (){
+    ...mapActions('professors', ['getAllProfessors']),
+    async getTeachers (){
       //TODO: call getTeachers service
-      this.teachers = [
-        { id: 1, firstNames: 'Juan', lastNames: 'García', studentSatisfactionScore: 3.8, img: 'src/assets/user.png' },
-        { id: 2, firstNames: 'María', lastNames: 'Ayala', studentSatisfactionScore: 2.6, img: 'src/assets/user.png' }
-      ]
+      const { data } = await this.getAllProfessors()
+      this.teachers = data
     }
   }
 }
