@@ -3,15 +3,20 @@ import VueApexCharts from 'vue3-apexcharts'
 
 export default {
 
-    name: 'TeacherDetail',
+    name: 'SubjectDetail',
+
+    props: { subject: {
+            type: Object,
+            default: () =>{}
+        }
+    },
 
     components: { apexchart: VueApexCharts },
 
     data (){
         return{
             emojis: ['angry', 'sad', 'meh', 'happy', 'rad'],
-            teacher: {},
-            reviews: [],
+            resources: [],
             series: [],
             chartOptions: {
                 chart: { width: 350, type: 'polarArea' },
@@ -40,11 +45,11 @@ export default {
 
     created (){
         const id = this.$route.params.id
-        this.getTeacher(id)
+        this.getResources(id)
     },
 
     methods: {
-        getTeacher (id){
+        getResources (id){
             //TODO: call getTeacher service
             //TODO: call getAllReviews by teacher
             this.teacher = { id, firstNames: 'Juan', lastNames: 'García', studentSatisfactionScore: 3.88, img: 'src/assets/user.png',
@@ -104,6 +109,7 @@ export default {
 
 <template>
     <section class="flex flex-wrap justify-center mx-1 my-10">
+        <h1>Subject</h1>
         <div class="flex mx-3 px-5 flex-col items-center justify-center w-1/5 bg-white shadow-xl rounded-lg">
             <img class=" w-30 h-30 rounded-full" :src="teacher.img" alt="teacher name">
             <h2 class="my-5 text-2xl">{{ teacher.firstNames }} {{ teacher.lastNames }}</h2>
