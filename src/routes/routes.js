@@ -22,6 +22,13 @@ const routes = [
     name: 'subjects',
     component: () =>
       import('@/layouts/listSubject.vue')
+  },
+  {
+    path: '/subjects/:id',
+    name: 'subjectDetail',
+    component: () =>
+      import('@/layouts/subjectDetail.vue'),
+    props: { subject: {} }
   }
 ]
 
